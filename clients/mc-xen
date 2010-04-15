@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+ 
+require 'mcollective'
+include MCollective::RPC
+ 
+options = rpcoptions do |parser, options|
+   parser.define_head "Xen Client"
+   parser.banner = "Usage: [options] [filters]"
+
+   parser.on('-a', '--action ACTION', 'action to run') do |v|
+        options[:action] = v
+   end
+
+   parser.on('-d', '--domu NAME', 'domU name to search') do |v|
+        options[:name] = v
+   end   
+end
+
+unless options.include?(:action)
+    puts "You must pass at least an action"
+    exit! 1
+end
+
+if options[:action] == "find" then
+    unless options.include?(:name)
+       puts("You need to specify a domU to find with --domu")
+       exit! 1
+    end
+end
+
+mc = rpcclient("xenagent")
+mc.progress = false
+client = mc.client
+
+if options[:action] == "find" then
+    mc.find(:name => options[:name]).each do |resp|
+        printf("%-25s: %s\n", resp[:sender], resp[:data])
+    end
+end
+
+if options[:action] == "list" then
+    mc.list.each do |resp|
+        printf("%-25s\n", resp[:sender])
+        # drop domain 0 from list
+        resp[:data][:slices].delete("Domain-0")
+        if resp[:data][:slices] != [] then
+            resp[:data][:slices].each { |d|
+                puts "\t #{d}"
+            }
+        else
+            puts "\t no domU running"
+        end
+        puts ""
+    end
+end
