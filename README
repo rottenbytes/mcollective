@@ -3,6 +3,7 @@ My mcollective stuff
 Agents :
  - xenagent : to get information from xen dom0s, and migrate VMs. Needs the xen gem
    located at http://github.com/rottenbytes/ruby-xen
+ - smith : just a toy
 
 Clients :
  - mc-xen : search for dom0 & domUs
