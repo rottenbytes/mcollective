@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+
+require 'mcollective'
+include MCollective::RPC
+require 'rubygems'
+require 'jabber/bot'
+
+bot = Jabber::Bot.new(
+    :jabber_id => "bot@jabber.qualigaz.com/Mcollective",
+    :password => "bot",
+    :master => "nico@jabber.qualigaz.com",
+    :is_public => true
+)
+
+bot.add_command(
+  :syntax      => 'find',
+  :description => 'find hosts',
+  :regex       => /^find$/,
+  :is_public   => true
+) { 
+    hosts = "\n---- hosts ----\n"
+    mc=rpcclient("discovery")
+    mc.progress=false
+    mc.ping.each { |resp|
+        hosts += resp[:sender].to_s+"\n"
+    }
+
+    hosts
+}
+
+bot.add_command(
+  :syntax      => 'facts [hostname]',
+  :description => 'shows facts',
+  :regex       => /^facts\s.*$/,
+  :is_public   => true
+) { |sender, argument|
+     
+}
+
+
+bot.connect
+
