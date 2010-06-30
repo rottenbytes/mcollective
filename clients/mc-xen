@@ -23,7 +23,7 @@ end
 
 if options[:action] == "find" then
     unless options.include?(:name)
-       puts("You need to specify a domU to find with --domu")
+       puts("You need to specify a domU to find with --domu|-d")
        exit! 1
     end
 end

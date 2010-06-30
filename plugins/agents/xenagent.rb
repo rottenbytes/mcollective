@@ -3,6 +3,14 @@ require 'xen'
 module MCollective
     module Agent
         class Xenagent < RPC::Agent
+            metadata :name        => "xenagent",
+                     :description => "Agent to manage xen", 
+                     :author      => "Nicolas Szalay",
+                     :license     => "BSD",
+                     :version     => "0.1",
+                     :url         => "http://www.rottenbytes.info/",
+                     :timeout     => 30
+        
             def startup_hook
                 # Increase timeout because migration can be longer than the default one
                 # Yes, it is quite bad
@@ -10,13 +18,13 @@ module MCollective
             end
         
             # Basic echo server, kept for tests
-            def echo_action
+            action "echo" do 
                 validate :msg, String
      
                 reply.data = request[:msg]
             end
 
-	        def find_action
+	        action "find" do
 		        validate :name, String
 		                  
 		        x=Xen::XenServer.new
@@ -27,13 +35,13 @@ module MCollective
 		        end
 	        end
 	        
-	        def list_action
+	        action "list" do
 	            x=Xen::XenServer.new
 	            reply[:slices] = x.slices
 	        end
 	        
 	        
-	        def stat_action
+	        action "stat" do
 	            x=Xen::XenServer.new
 	            # We don't care about domain 0
 	            slices = x.slices
@@ -47,7 +55,7 @@ module MCollective
 	            end
 	        end
 	        
-	        def migrate_action
+	        action "migrate" do
 	            validate :slice, String
 	            validate :newhost, :ipv4address
 	        
@@ -56,6 +64,21 @@ module MCollective
 	            reply[:result]=result
 	        end
 	        
+	        action "create" do
+	            validate :name, String
+	            
+	            x=Xen::XenServer.new
+	            result=x.create(request[:name])
+	            reply[:result]=result
+	        end
+	        
+	        action "destroy" do
+	            validate :name, String
+	            
+	            x=Xen::XenServer.new
+	            result=x.destroy(request[:name])
+	            reply[:result]=result
+	        end
         # end of class
         end
     end
