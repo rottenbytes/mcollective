@@ -1,4 +1,4 @@
-metadata :name => "xenagent",
+metadata :name => "svnagent",
     :description => "Agent to manage SVN repos", 
 	:author => "Nicolas Szalay <nico@rottenbytes.info",
 	:license => "BSD",
