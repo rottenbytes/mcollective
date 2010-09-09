@@ -12,9 +12,10 @@ action "update", :description => "Updates the repo in the specified path" do
 	    :description =>  "full path of the repository",
 	    :type => :string,
 	    :validation  => '^[a-zA-Z\-_\d]+$',
-	    :optional => false,
-	 output :data
-	    :description => "The repository revision number extracted"
+	    :optional => false
+
+	 output "data",
+	    :description => "The repository revision number extracted",
 	    :display_as => "Revision number"
 end
 
@@ -24,8 +25,9 @@ action "getrevision", :description => "get the revision of the specified path" d
 	    :description =>  "full path of the repository",
 	    :type => :string,
 	    :validation  => '^[a-zA-Z\-_\d]+$',
-	    :optional => false,
-	 output :revision
-	    :description => "The repository revision number extracted"
+	    :optional => false
+
+	 output "revision",
+	    :description => "The repository revision number extracted",
 	    :display_as => "Revision number"
 end
