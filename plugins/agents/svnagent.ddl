@@ -11,6 +11,7 @@ action "update", :description => "Updates the repo in the specified path" do
 	    :prompt => "path",
 	    :description =>  "full path of the repository",
 	    :type => :string,
+	    :validation  => '^[a-zA-Z\-_\d]+$',
 	    :optional => false,
 	 output :data
 	    :description => "The repository revision number extracted"

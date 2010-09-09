@@ -14,7 +14,7 @@ action "find", :description => "Finds the specified domU" do
 	    :prompt => "domU name",
 	    :description => "The domU name",
 	    :type => :string,
-            :validation  => '^[a-zA-Z\-_\d]+$',
+        :validation  => '^[a-zA-Z\-_\d]+$',
 	    :optional => false
 end
 
@@ -44,7 +44,7 @@ action "migrate", :description => "Migrate a domU to another dom0" do
 	    :prompt => "dom0 name",
 	    :description => "The destination dom0",
 	    :type => :string,
-            :validation  => '^[a-zA-Z\-_\d]+$',
+        :validation  => '^[a-zA-Z\-_\d]+$',
 	    :optional => false
 end
 
@@ -62,7 +62,7 @@ action "destroy", :description => "Destroys the specified domU" do
 	    :prompt => "domU name",
 	    :description => "The domU to destroy",
 	    :type => :string,
-            :validation  => '^[a-zA-Z\-_\d]+$',
+        :validation  => '^[a-zA-Z\-_\d]+$',
 	    :optional => false
 end
 
