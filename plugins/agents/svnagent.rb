@@ -20,6 +20,14 @@ module MCollective
 		# send back revision number
 		reply[:data]=revision.chomp.split(" ")[-1].gsub(".","")
 	    end
+
+	    action "getrevision" do
+		validate :path, String
+
+		# accomodate english & french locales 
+		revision=`cd #{request[:path]} && svn info | grep R.vision | head -1`
+		reply[:revision]=revision.chomp.split(" ")[-1]
+	    end
 	        
         # end of class Svnagent
         end
