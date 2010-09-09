@@ -14,7 +14,8 @@ action "find", :description => "Finds the specified domU" do
 	    :prompt => "domU name",
 	    :description => "The domU name",
 	    :type => :string,
-	    :optional => false,
+            :validation  => '^[a-zA-Z\-_\d]+$',
+	    :optional => false
 end
 
 action "stat", :description => "returns load avg & domu times" do
@@ -36,13 +37,15 @@ action "migrate", :description => "Migrate a domU to another dom0" do
 	    :prompt => "domU name",
 	    :description => "The domU name",
 	    :type => :string,
-	    :optional => false,
+	    :validation  => '^[a-zA-Z\-_\d]+$',
+	    :optional => false
 
     input :newhost,
 	    :prompt => "dom0 name",
 	    :description => "The destination dom0",
 	    :type => :string,
-	    :optional => false,
+            :validation  => '^[a-zA-Z\-_\d]+$',
+	    :optional => false
 end
 
 action "create", :description => "Starts the specified domU" do
@@ -50,7 +53,8 @@ action "create", :description => "Starts the specified domU" do
         :prompt => "domU name",
         :description => "The domU to start",
         :type => :string,
-        :optional => false,
+        :validation  => '^[a-zA-Z\-_\d]+$',
+        :optional => false
 end
 
 action "destroy", :description => "Destroys the specified domU" do
@@ -58,6 +62,7 @@ action "destroy", :description => "Destroys the specified domU" do
 	    :prompt => "domU name",
 	    :description => "The domU to destroy",
 	    :type => :string,
-	    :optional => false,
+            :validation  => '^[a-zA-Z\-_\d]+$',
+	    :optional => false
 end
 
