@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+# You need cssh installed for this one !
+# By nico <nico@rottenbytes.info>
+
+require 'mcollective'
+include MCollective::RPC
+
+ssh_clients = ""
+
+oparser = MCollective::Optionparser.new({}, "filter")
+
+options = oparser.parse{|parser, options|
+    parser.define_head "Find hosts matching criteria"
+    parser.banner = "Usage: mc-find-hosts [options] [filters]"
+}
+
+client = MCollective::Client.new(options[:config])
+client.options = options
+
+stats = client.req("ping", "discovery") do |resp|
+    ssh_clients+=resp[:senderid]+" "
+end
+
+`cssh #{ssh_clients}`
