@@ -4,6 +4,9 @@ Agents :
  - xenagent : to get information from xen dom0s, and migrate VMs. Needs the xen gem
    located at http://github.com/rottenbytes/ruby-xen
  - smith : just a toy
+ - chef-service : handle services using chef provider
+ - chef-package	: handle packages using chef provider
+ - chef-resource : generic handler for a chef resource
 
 Clients :
  - mc-xen : search for dom0 & domUs
