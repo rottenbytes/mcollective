@@ -1,7 +1,6 @@
 module MCollective
     module Agent
-        # An agent that uses Opscode to manage services
-        # Made from the puppet version
+        # An agent that uses Opscode to manage resources
         # Original credit goes to R.I. Pienaar
         class Chefresource<RPC::Agent
             metadata    :name        => "SimpleRPC Chef Resource Agent",
