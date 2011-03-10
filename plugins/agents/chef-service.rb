@@ -40,8 +40,7 @@ module MCollective
                     recipe = Chef::Recipe.new("adhoc", "default", run_context)
                     resource = recipe.send(:service, request[:service])
                     resource.send("action",action)
-                    # Fixme : needs to be more generic
-                    resource.send("status_command","/etc/init.d/#{request[:service]} status")
+                    resource.send("supports", {:status => true } )
                     
                     Log.instance.debug("Doing '#{action}' for service '#{request[:service]}'")
                     status=Chef::Runner.new(run_context).converge
