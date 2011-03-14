@@ -15,7 +15,6 @@ module MCollective
             action "handle" do
                 validate :resourcetype, String
                 validate :resourcename, String
-                validate :resourceaction, String
 
                 require 'chef'
                 require 'chef/client'
@@ -31,11 +30,15 @@ module MCollective
 
                     run_context = Chef::RunContext.new(client.node, Chef::CookbookCollection.new(Chef::CookbookLoader.new))
                     recipe = Chef::Recipe.new("adhoc", "default", run_context)
-                    resource = recipe.send(request[:resourcetype].to_sym, request[:resourcename])
-                    resource.send("action",request[:resourceaction])
-                    # add generic handling of more arguments
-                    
-                    Log.instance.debug("Doing '#{request[:resourceaction]}' for resource #{request[:resourcetype]} '#{request[:resourcename]}'")
+                    # create the resource
+		    resource = recipe.send(request[:resourcetype].to_sym, request[:resourcename])
+		    # insert action, attribute, whatever supported by your resource type
+                    request[:resourceactions].each { |action|
+			action.each_pair { |k,v|
+				resource.send(k,v)
+			}
+		    }
+                    Log.instance.debug("Converging for resource #{request[:resourcetype]} '#{request[:resourcename]}'")
                     status=Chef::Runner.new(run_context).converge
                        
                     reply["status"] = status
