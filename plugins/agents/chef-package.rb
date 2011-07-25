@@ -41,7 +41,7 @@ module MCollective
                     client.run_ohai
                     client.build_node
 
-                    run_context = Chef::RunContext.new(client.node, Chef::CookbookCollection.new(Chef::CookbookLoader.new))
+                    run_context = Chef::RunContext.new(client.node, Chef::CookbookCollection.new(Chef::CookbookLoader.new("/tmp")))
                     recipe = Chef::Recipe.new("adhoc", "default", run_context)
                     resource = recipe.send(:package, package)
                     resource.send("action",action)
